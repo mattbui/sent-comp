@@ -22,3 +22,10 @@ bash $PRJ_HOME/runs/preprocess.sh
 ```
 
 ## Training
+
+Different training configs for each settings are available in `runs/`. To start training:
+
+```bash
+export PRJ_HOME=<path/to/this/project>
+bash $PRJ_HOME/runs/train_<config_name>.sh
+```
