@@ -41,6 +41,7 @@ if __name__ == "__main__":
         + "https://github.com/flairNLP/flair/blob/master/resources/docs/TUTORIAL_4_ELMO_BERT_FLAIR_EMBEDDING.md "
         + "for the full list",
     )
+    parser.add_argument("--finetune", action="store_true", help="whether or not transformer embeddings are fine-tuneable")
     parser.add_argument("--use_rnn", action="store_true", help="use RNN layer, otherwise use word embeddings directly")
     parser.add_argument("--use_crf", action="store_true", help="use CRF decoder, else project directly to tag space")
     parser.add_argument("--hidden_size", type=int, default=256, help="number of hidden states in RNN")
@@ -72,7 +73,7 @@ if __name__ == "__main__":
         for direction in ["forward", "backward"]:
             embeddings.append(FlairEmbeddings(args.flair_embedding.replace("X", direction)))
     if args.transformer_embedding is not None:
-        embeddings.append(TransformerWordEmbeddings(args.transformer_embedding))
+        embeddings.append(TransformerWordEmbeddings(args.transformer_embedding, fine_tune=args.finetune, layers="-1"))
 
     embeddings = StackedEmbeddings(embeddings=embeddings)
     tagger = SequenceTagger(
